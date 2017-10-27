@@ -1,7 +1,7 @@
 #pragma once
 #include "keyword.h"
 #include <string.h>
-
+/*	만약 strstr 을 못쓰게 하셨을 경우를 대비한 kmp 알고리즘으로 짠 데이터
 int * getPrefix(char * pattern, int psize)
 {
 	int k = -1;
@@ -45,10 +45,31 @@ Node* findKeyword(const char * data, const char * pattern)
 	int nowPoint = 0, dataLength = strlen(data), patternLength = strlen(pattern);
 	while (nowPoint < dataLength) 
 	{
-		nowPoint = kmp(data, dataLength, pattern, patternLength);
+		nowPoint += kmp(data+nowPoint, dataLength-nowPoint, pattern, patternLength);
+		nowPoint += patternLength;
 		if (nowPoint == -1) break;
 		if (result == NULL) result = NewNode(data + nowPoint);
 		else AppendNode(result, NewNode(data + nowPoint));
+	}
+	return result;
+}
+*/
+Node* findKeyword(const char * data, const char * pattern)
+{
+	Node* result = NULL;
+	int dataLength = strlen(data), patternLength = strlen(pattern);
+	char* nowSearchPoint = data;
+	while (nowSearchPoint !=NULL) {
+		nowSearchPoint = strstr(nowSearchPoint, pattern);
+		if (nowSearchPoint !=NULL) {
+		nowSearchPoint += patternLength;
+			if (result != NULL) {
+				AppendNode(result, NewNode(nowSearchPoint-patternLength));
+			}
+			else {
+				result = NewNode(nowSearchPoint-patternLength);
+			}
+		}
 	}
 	return result;
 }

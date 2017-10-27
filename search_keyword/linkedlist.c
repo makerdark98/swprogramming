@@ -38,7 +38,7 @@ void DeleteNode(Node * node)
 void DestroyNode(Node * head)
 {
 	Node* tmp;
-	while (head->next != NULL) 
+	while (head != NULL) 
 	{
 		tmp = head;
 		head = head->next;
