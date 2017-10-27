@@ -1,4 +1,6 @@
 #pragma once
-#include <stdlib.h>
 
-char** findKeyword(const char* data, const char* keyword); // if success, return 1. if failed, return 0
+#include "linkedlist.h"
+int* getPrefix(char *pattern, int psize);
+int kmp(char *target, int tsize, char *pattern, int psize);
+Node* findKeyword(const char* data, const char* pattern);
