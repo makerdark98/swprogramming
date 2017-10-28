@@ -1,6 +1,10 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdlib.h>
+#include <direct.h>
 #include "linkedlist.h"
 #include "keyword.h"
 #include "file.h"
