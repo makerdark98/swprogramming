@@ -7,6 +7,7 @@ Node * NewNode(char * Data)
 	tmp->Data = Data;
 	tmp->next = NULL;
 	tmp->prev = NULL;
+	return tmp;
 }
 
 void appendNode(Node * head, Node * end)

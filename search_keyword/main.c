@@ -3,7 +3,6 @@
 #define OS_Windows 1
 #include "main.h"
 #include <time.h>
-#include <crtdbg.h>
 #endif
 void testJustSearch(int argc, char* argv[]) {
 	FILE *fin = fopen("input.txt", "r");
@@ -36,6 +35,5 @@ int main(int argc, char* argv[]) {	//argv[1] : pattern string
 		double result = (double)(clock() - before) / CLOCKS_PER_SEC;
 		printf("%5.10f\n", result);
 	}
-	_CrtDumpMemoryLeaks();
 	return 0;
 }
