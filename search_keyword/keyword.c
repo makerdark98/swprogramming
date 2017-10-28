@@ -64,7 +64,7 @@ Node* findKeyword(const char * data, const char * pattern)
 		if (nowSearchPoint !=NULL) {
 		nowSearchPoint += patternLength;
 			if (result != NULL) {
-				AppendNode(result, NewNode(nowSearchPoint-patternLength));
+				appendHeadNode(&result, NewNode(nowSearchPoint-patternLength));
 			}
 			else {
 				result = NewNode(nowSearchPoint-patternLength);

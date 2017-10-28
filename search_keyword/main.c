@@ -2,13 +2,10 @@
 
 #define OS_Windows 1
 #include "main.h"
-
+#include <time.h>
 #include <crtdbg.h>
 #endif
-void func(int argc, char* argv[]) {
-	for (int i = 0; i < argc; i++) {
-		printf("%s\n", argv[i]);
-	}
+void testJustSearch(int argc, char* argv[]) {
 	FILE *fin = fopen("input.txt", "r");
 	fseek(fin, 0, SEEK_END);
 	int fsize = ftell(fin);
@@ -17,22 +14,28 @@ void func(int argc, char* argv[]) {
 	fread(data, fsize, 1, fin);
 	Node* find_point = findKeyword(data, argv[1]);
 	Node* tmp = find_point;
-	while (tmp != NULL) {
+	/*while (tmp != NULL) {
 		for (int i = 0; i < 3; i++) {
 			printf("%c", tmp->Data[i]);
 		}
 		printf("\n");
 		tmp = tmp->next;
 	}
-
-	DestroyNode(find_point);
+	*/
+	destroyNode(find_point);
 	free(data);
 	fclose(fin);
 
 }
 
 int main(int argc, char* argv[]) {	//argv[1] : pattern string
-	func(argc, argv);
+	for (int i = 0; i < 100; i++) {
+		clock_t before = clock();
+		if (argc == 1) printf("No paramater\n");
+		else testJustSearch(argc, argv);
+		double result = (double)(clock() - before) / CLOCKS_PER_SEC;
+		printf("%5.10f\n", result);
+	}
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

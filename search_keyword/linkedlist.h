@@ -6,7 +6,9 @@ typedef struct __Node {
 }Node;
 
 Node* NewNode(char* Data);
-void AppendNode(Node *head, Node *end);
-void RemoveNode(Node *head, Node *node);
-void DeleteNode(Node *node);
-void DestroyNode(Node *head);
+void appendNode(Node *head, Node *end);
+void removeNode(Node *head, Node *node);
+void deleteNode(Node *node);
+void destroyNode(Node *head);
+int getLengthList(Node *head);
+void appendHeadNode(Node **head, Node *end);

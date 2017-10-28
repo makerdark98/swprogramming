@@ -142,11 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="file.c" />
     <ClCompile Include="keyword.c" />
     <ClCompile Include="linkedlist.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="file.h" />
     <ClInclude Include="keyword.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="main.h" />

@@ -9,7 +9,7 @@ Node * NewNode(char * Data)
 	tmp->prev = NULL;
 }
 
-void AppendNode(Node * head, Node * end)
+void appendNode(Node * head, Node * end)
 {
 	while (head->next != NULL) 
 	{
@@ -19,7 +19,7 @@ void AppendNode(Node * head, Node * end)
 	if (end != NULL) end->prev = head;
 }
 
-void RemoveNode(Node * head, Node * node)
+void removeNode(Node * head, Node * node)
 {
 	while (head->next == node) 
 	{
@@ -27,21 +27,38 @@ void RemoveNode(Node * head, Node * node)
 	}
 	head->next = node->next;
 	node->next->prev = head;
-	DeleteNode(node);
+	deleteNode(node);
 }
 
-void DeleteNode(Node * node)
+void deleteNode(Node * node)
 {
 	free(node);
 }
 
-void DestroyNode(Node * head)
+void destroyNode(Node * head)
 {
 	Node* tmp;
 	while (head != NULL) 
 	{
 		tmp = head;
 		head = head->next;
-		DeleteNode(tmp);
+		deleteNode(tmp);
 	}
+}
+
+int getLengthList(Node * head)
+{
+	int length = 0;
+	while (head != NULL) {
+		head = head->next;
+		length++;
+	}
+	return length;
+}
+
+void appendHeadNode(Node ** head, Node * end)
+{
+	end->next = (*head);
+	(*head)->prev = end;
+	(*head) = end;
 }
