@@ -46,5 +46,17 @@
     <Text Include="input.txt">
       <Filter>리소스 파일</Filter>
     </Text>
+    <Text Include="0.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="1.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="2.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="3.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>
