@@ -1,5 +1,6 @@
 #pragma once
 #include "keyword.h"
+#include <string.h>
 /*	만약 strstr 을 못쓰게 하셨을 경우를 대비한 kmp 알고리즘으로 짠 데이터
 int * getPrefix(char * pattern, int psize)
 {
@@ -71,4 +72,39 @@ Node* findKeyword(const char * data, const char * pattern)
 		}
 	}
 	return result;
+}
+
+int extractSentence(char** sentenceFirst, const char * originalStartPoint, const char * endPoint, char* keywordPoint)
+{
+	int sentenceLength = 0;
+	char *frontDot, *behindDot;
+	// find frontDot;
+	for (frontDot = keywordPoint; *frontDot != '.' && frontDot > originalStartPoint; frontDot--);
+	// find behindDot;
+	for (behindDot = keywordPoint; *behindDot != '.' && behindDot < endPoint; behindDot++);
+	sentenceLength = behindDot - frontDot;
+	if(frontDot == originalStartPoint) *sentenceFirst = frontDot;
+	else *sentenceFirst = (frontDot + 1);
+	return sentenceLength;
+}
+
+int isMonolingual(const char * originalStartPoint, const char * endPoint, char * keywordPoint, int lengthKeyword)
+{
+	if (keywordPoint == originalStartPoint || isWhitespace(*(keywordPoint - 1))) {
+		if (keywordPoint + lengthKeyword> endPoint || isWhitespace(*(keywordPoint + lengthKeyword))) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int isWhitespace(char c)
+{
+	return c==' '||c=='\t'||c=='\n'||c=='.';
+}
+
+void changeToLower(char * data)
+{
+	for (int i = 0; data[i] != '\0'; i++)
+		data[i] = tolower(data[i]);
 }
