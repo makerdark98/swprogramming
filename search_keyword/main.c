@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 		}
 		qsort(degFile, numFile, sizeof(FNodeRank), compare);
 		for (int i = 0; i < numFile; i++) {
-			printf("%s %d\n", degFile[i].DataNode->Data, degFile[i].Rank);
+			if(degFile[i].Rank>1) printf("%s %d\n", degFile[i].DataNode->Data, degFile[i].Rank);
 		}
 		free(degFile);
 		destroyFileList(filelist);
@@ -94,13 +94,7 @@ DWORD WINAPI CheckData(LPVOID lp)
 		Node* tmp2 = find_point;
 		int length = 0;
 		while (tmp2 != NULL) {
-			char *sentenceStartPoint;
-			int sentenceLength = extractSentence(&sentenceStartPoint, data, data + size.QuadPart, tmp2->Data);
-			for (int i = 0; i < sentenceLength; i++) {
-				printf("%c", sentenceStartPoint[i]);
-			}
-			printf("\n");
-			length++;
+			length += (4 - getNumSideChar(data, data + size.QuadPart, tmp2->Data, strlen(Keyword))) * 10;
 			tmp2 = tmp2->next;
 		}
 		P.rank[i].Rank = length;
@@ -117,5 +111,5 @@ int compare(void* first, void* second) {
 	if (((FNodeRank*)first)->Rank == ((FNodeRank*)second)->Rank) {
 		return strcmp(((FNodeRank*)first)->DataNode->Data, ((FNodeRank*)second)->DataNode->Data);
 	}
-	return (((FNodeRank*)first)->Rank < ((FNodeRank*)second)->Rank);
+	return ((FNodeRank*)first)->Rank > ((FNodeRank*)second)->Rank ? -1 : 1;
 }

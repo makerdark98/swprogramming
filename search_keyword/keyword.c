@@ -1,7 +1,7 @@
 #pragma once
 #include "keyword.h"
 #include <string.h>
-/*	만약 strstr 을 못쓰게 하셨을 경우를 대비한 kmp 알고리즘으로 짠 데이터
+/*	만약 strstr 을 못쓰게 하셨을 경우를 대비한 kmp 알고리즘으로 짠 데이터*/
 int * getPrefix(char * pattern, int psize)
 {
 	int k = -1;
@@ -32,18 +32,18 @@ int kmp(char * target, int tsize, char * pattern, int psize)
 			k++;
 		if (k == psize - 1) {
 			free(pi);
-			return i - k;
+			return target + (i - k);
 		}
 	}
 	free(pi);
-	return -1;
+	return NULL;
 }
-
+/*
 Node* findKeyword(const char * data, const char * pattern)
 {
 	Node* result = NULL;
 	int nowPoint = 0, dataLength = strlen(data), patternLength = strlen(pattern);
-	while (nowPoint < dataLength) 
+	while (nowPoint < dataLength)
 	{
 		nowPoint += kmp(data+nowPoint, dataLength-nowPoint, pattern, patternLength);
 		nowPoint += patternLength;
@@ -58,16 +58,18 @@ Node* findKeyword(const char * data, const char * pattern)
 {
 	Node* result = NULL;
 	int dataLength = strlen(data), patternLength = strlen(pattern);
+	int originalDataLength = dataLength;
 	char* nowSearchPoint = data;
-	while (nowSearchPoint !=NULL) {
-		nowSearchPoint = strstr(nowSearchPoint, pattern);
-		if (nowSearchPoint !=NULL) {
-		nowSearchPoint += patternLength;
+	while (nowSearchPoint != NULL) {
+		nowSearchPoint = kmp(nowSearchPoint, dataLength, pattern, patternLength);
+		if (nowSearchPoint != NULL) {
+			nowSearchPoint += patternLength;
+			dataLength = originalDataLength - (nowSearchPoint - data);
 			if (result != NULL) {
-				appendHeadNode(&result, NewNode(nowSearchPoint-patternLength));
+				appendHeadNode(&result, NewNode(nowSearchPoint - patternLength));
 			}
 			else {
-				result = NewNode(nowSearchPoint-patternLength);
+				result = NewNode(nowSearchPoint - patternLength);
 			}
 		}
 	}
@@ -83,24 +85,30 @@ int extractSentence(char** sentenceFirst, const char * originalStartPoint, const
 	// find behindDot;
 	for (behindDot = keywordPoint; *behindDot != '.' && behindDot < endPoint; behindDot++);
 	sentenceLength = behindDot - frontDot;
-	if(frontDot == originalStartPoint) *sentenceFirst = frontDot;
+	if (frontDot == originalStartPoint) *sentenceFirst = frontDot;
 	else *sentenceFirst = (frontDot + 1);
 	return sentenceLength;
 }
 
+int getNumSideChar(const char* originalStartPoint, const char* endPoint, char* keywordPoint, int lengthKeyword) {
+	int f = 0, b = 0;
+	for (f = 0; originalStartPoint <= keywordPoint - f-1; f++) {
+		if (isWhitespace(*(keywordPoint - f-1))) break;
+	}
+	for (b = 0; endPoint >= keywordPoint + b; b++) {
+		if (isWhitespace(keywordPoint[lengthKeyword+b])) break;
+	}
+	return f > b ? f : b;
+}
 int isMonolingual(const char * originalStartPoint, const char * endPoint, char * keywordPoint, int lengthKeyword)
 {
-	if (keywordPoint == originalStartPoint || isWhitespace(*(keywordPoint - 1))) {
-		if (keywordPoint + lengthKeyword> endPoint || isWhitespace(*(keywordPoint + lengthKeyword))) {
-			return 1;
-		}
-	}
+	if (getNumSideChar(originalStartPoint, endPoint, keywordPoint, lengthKeyword) == 0) return 1;
 	return 0;
 }
 
 int isWhitespace(char c)
 {
-	return c==' '||c=='\t'||c=='\n'||c=='.';
+	return c == ' ' || c == '\t' || c == '\n' || c == '\0';
 }
 
 void changeToLower(char * data)
