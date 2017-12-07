@@ -1,7 +1,6 @@
 #pragma once
 #include "keyword.h"
 #include <string.h>
-/*	만약 strstr 을 못쓰게 하셨을 경우를 대비한 kmp 알고리즘으로 짠 데이터*/
 int * getPrefix(char * pattern, int psize)
 {
 	int k = -1;

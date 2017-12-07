@@ -13,7 +13,6 @@
 
 
 int main(int argc, char* argv[]);
-int getNumberOfProcessor();
 typedef struct __FNodeRank {
 	Node* DataNode;
 	int Rank;
